@@ -57,10 +57,9 @@ class RESCAL(nn.Module):
 
         if alpha_scores is not None:
           scores = alpha_scores * scores
-        b = np.array(scores.cpu())
         scores = scores.sum(dim=(-2, -1))
        
-        return scores,b
+        return scores
     
     def __repr__(self):
         return f"{self.__class__.__name__}({self.n_rels}, {self.rel_emb.weight.shape})"
