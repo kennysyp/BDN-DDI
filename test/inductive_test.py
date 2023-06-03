@@ -15,7 +15,7 @@ from torch_geometric.nn import (
     global_add_pool,
     Set2Set,
 )
-import models
+from models import BDN_DDI
 import custom_loss
 from data_preprocessing import DrugDataset, DrugDataLoader
 import warnings
@@ -38,12 +38,9 @@ parser.add_argument('--weight_decay', type=float, default=5e-4)
 parser.add_argument('--neg_samples', type=int, default=1)
 parser.add_argument('--data_size_ratio', type=int, default=1)
 parser.add_argument('--use_cuda', type=bool, default=True, choices=[0, 1])
-# parser.add_argument('--pkl_name', type=str, default='drugbank_test/inductive_drugbank.pkl')
-parser.add_argument('--pkl_name', type=str, default='inductive_layers4.pkl')
-parser.add_argument('--NTN_open', type=bool, default=True)
+parser.add_argument('--pkl_name', type=str, default='inductive.pkl')
 
 args = parser.parse_args()
-op = args.NTN_open
 n_atom_feats = args.n_atom_feats
 n_atom_hid = args.n_atom_hid
 rel_total = args.rel_total
@@ -150,6 +147,6 @@ def test(s1_data_loader, s2_data_loader, model):
 
 
 if __name__ == '__main__':
-    name = 'inductive_layers6.pkl'
-    test_model = torch.load(name)
+    test_model = torch.load(pkl_name)
+    test_model.to(device=device)
     test(s1_data_loader, s2_data_loader, test_model)
