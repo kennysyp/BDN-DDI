@@ -163,7 +163,6 @@ class BDN_DDI_Block(nn.Module):
         self.in_features = in_features
         self.out_features = head_out_feats
 
-        self.feature_conv = GATConv(in_features, head_out_feats, n_heads)
         self.NTN_conv = NTNConv(in_features, head_out_feats * n_heads, slices=2, dropout=0.2, edge_dim=6)
         self.intraAtt = IntraGraphAttention(head_out_feats * n_heads)
         self.interAtt = InterGraphAttention(head_out_feats * n_heads)
